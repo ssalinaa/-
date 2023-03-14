@@ -1,0 +1,130 @@
+#include <iostream>
+#include <cmath>
+
+class Point {
+
+public:
+    double x;
+    double y;
+
+    Point()
+    {
+        x = 0;
+        y = 0;
+    }
+
+    Point(double x, double y) {
+
+        this->x = x;
+        this->y = y;
+    }
+
+    double distance(const Point& other) {
+
+        return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2));
+    }
+};
+    /*
+    double operator-(const Point& other) {
+
+        return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2));
+    }
+
+    Point operator+(const Point& other) {
+
+        return Point(x + other.x, y + other.y);
+    }
+
+    Point operator*(int n) {
+
+        return Point(x * n, y * n);
+    }
+
+    bool operator==(const Point& other) {
+
+        return x == other.x && y == other.y;
+    }
+    
+    template<typename B>
+    bool contains(B points[], int size, B elem) {
+
+        for (size_t i = 0; i < size; i++)
+        {
+            if (points[i] == elem) {
+
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+    Point operator*(int n, Point p) {
+
+        return Point(p.x * n, p.y * n);
+    }
+  
+int main()
+{
+    Point p(3, 4);
+    Point p1(0, 1);
+    Point p2;
+
+    p.print();
+    p1.print();
+
+    p2 = p * 3;
+    p2 = 3 * p;
+    
+    p2.print();
+
+    std::cout << (p == p1) << std::endl;
+    std::cout << (p1 == p1) << std::endl;
+
+    Point points[3] = { p, p1, p2 };
+
+    Point p3;
+    p3 = p2 * 5;
+
+    return 0;
+}
+*/
+
+class Triangle {
+
+public:
+    Point x1, x2, x3;
+
+    Triangle(){}
+    
+    Triangle(Point x1, Point x2, Point x3) {
+        this->x1 = x1;
+        this->x2 = x2;
+        this->x3 = x3;
+    }
+
+    Triangle(double x1, double y1, double x2, double y2, double x3, double y3) {
+        this->x1 = Point(x1, y1);
+        this->x2 = Point(x2, y2);
+        this->x3 = Point(x3, y3);
+    }
+
+    double p() {
+
+        double a = x1.distance(x2);
+        double b = x2.distance(x3);
+        double c = x3.distance(x1);
+
+        return a + b + c;
+
+    }
+};
+
+int main() {
+
+    Triangle t;
+    Triangle t1(Point(0, 0), Point(1, 1), Point(5, 4));
+    
+    std::cout << t1.p() << std::endl;
+
+}
