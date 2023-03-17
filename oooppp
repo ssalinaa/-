@@ -1,0 +1,144 @@
+#include <iostream>
+#include <cstddef>
+#include <cassert>
+#include<cstring>
+
+/*
+class User {
+private:
+	char* name;
+	int age;
+
+public:
+	
+	User(const char* name_, int age_) {
+		this->name = new char[strlen(name_) + 1];
+		for (size_t i = 0; i < strlen(name_) + 1; i++)
+		{
+			this->name[i] = name_[i];
+		}
+		this->age = age_;
+	}
+
+	void print() {
+		std::cout << this->name << std::endl;
+		std::cout << this->age << std::endl;
+	}
+};
+
+int main() {
+	User t("Tom", 5);
+	t.print();
+
+
+
+	return 0;
+}
+*/
+
+
+
+template <typename T, typename U>
+int* map(const T* arr, size_t size, U (*f)(const T&)) {
+
+	T* result = new T[size];
+	for (size_t i = 0; i < size; i++)
+	{
+		result[i] = f(arr[i]);
+	}
+	return result;
+}
+
+template<typename T>
+T multiply(const T& mul1) {
+	return mul1 * 2;
+
+}
+
+template <typename T>
+T reduce(const T* arr, std::size_t size, const T& neutralElem, T(*f)(const T&, const T&)) {
+
+	T temp = neutralElem;
+	for (size_t i = 0; i < size; i++)
+	{
+		temp = f(temp, arr[i]);
+	}
+	return temp;
+}
+
+int sum(const int& a,const int& b)
+{
+	return a + b;
+}
+
+
+using Function_t = int (*)(int, int);
+
+Function_t maximise(Function_t* functions, std::size_t size, int elem) {
+
+	if (size == 0) {
+		return nullptr;
+	}
+	int maxResult = functions[0](elem);
+	Function_t maxFunction = functions[0];
+	
+	for (size_t i = 1; i < size; i++)
+	{
+		int currentResult = functions[i](elem);
+		if (currentResult > maxResult) {
+			maxResult = currentResult;
+			maxFunction = functions[i];
+		}
+	}
+	return maxFunction;
+}
+
+
+int main() {
+
+	Function_t functions[] = {
+		[] (int t) -> int(return 2 * t;),
+		[](int t) -> int(return t * t;),
+		[](int t) -> int(return t + 1;)
+	};
+
+	Function_t f = maximise(functions, 3, 5);
+	std::cout << (int)(f - functions) << std::endl;
+
+
+	int arr[] = { 1, 2, 5, 10 };
+	//int* result = map<int, int>(arr, 4, multiply<int>);
+	int result = reduce(arr, 4, 0, sum);
+	std::cout << result << std::endl;
+	
+	return 0;
+}
+
+
+/*
+template<typename T, typename U>
+bool filter(const T* arr, size_t size, U(*f)(const T&)) {
+
+		T* result = new T[size];
+	for (size_t i = 0; i < size; i++)
+	{
+		result[i] = f(arr[i]);
+	}
+	return result;
+}
+
+
+
+int main() {
+
+	int arr[] = { 1, 2, 5, 10 };
+	int* result = filter<bool, bool>(arr, 4, );
+
+	for (size_t i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	{
+		std::cout << result[i] << " ";
+	}
+	return 0 ;
+	}
+*/
+
